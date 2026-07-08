@@ -1,51 +1,128 @@
-CREATE TABLE Customers (
-    CustomerID INT PRIMARY KEY,
-    CustomerName VARCHAR(100),
-    City VARCHAR(100)
+CREATE TABLE Branch
+(
+    BranchID INT PRIMARY KEY,
+    BranchFullName VARCHAR(100),
+    AreaID INT,
+    BranchAddress VARCHAR(255),
+    BranchRT VARCHAR(5),
+    BranchRW VARCHAR(5),
+    BranchKelurahan VARCHAR(100),
+    BranchKecamatan VARCHAR(100),
+    BranchCity VARCHAR(100),
+    BranchPhone1 VARCHAR(20),
+    IsActive BIT,
+    UsrUpd VARCHAR(50),
+    DtmUpd DATETIME
 );
 
-CREATE TABLE Products (
-    ProductID INT PRIMARY KEY,
-    ProductName VARCHAR(100),
-    Category VARCHAR(50),
-    Price DECIMAL(18,2)
-);
+CREATE TABLE LogPayment(
+	BranchID varchar(3) NOT NULL,
+	ApplicationID varchar(20) NOT NULL,
+	Reason varchar(20) NOT NULL,
+	RequestBy varchar(20) NULL,
+	ActivePhoneNumber varchar(15) NULL,
+	PrepaymentType char(2) NOT NULL,
+	EffectiveDate date NOT NULL,
+	SeqNo int NOT NULL,
+	UsrLog Varchar(50),
+	DtmLog Varchar(50))
 
-CREATE TABLE Orders (
-    OrderID INT PRIMARY KEY,
-    CustomerID INT,
-    ProductID INT,
-    OrderDate DATE,
-    Quantity INT,
+create table PaymentRequest (
+BranchID	Varchar (3),
+ApplicationID	Varchar (20),
+Reason	Varchar (100),
+RequestBy	Varchar (100),
+PrepaymentType	Varchar (5),
+FollowUpDate	Date,
+SeqNo	int,
+IsFollowUp	Bit,
+Usrupd	Varchar (50),
+Dtmupd	Date
+)
 
-    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
-);
-
---insert
-
-INSERT INTO Customers
+INSERT INTO Branch
+(
+    BranchID,
+    BranchFullName,
+    AreaID,
+    BranchAddress,
+    BranchRT,
+    BranchRW,
+    BranchKelurahan,
+    BranchKecamatan,
+    BranchCity,
+    BranchPhone1,
+    IsActive,
+    UsrUpd,
+    DtmUpd
+)
 VALUES
-(1,'John'),
-(2,'Michael'),
-(3,'Sarah');
+(501, 'KUDUS', 206, 'JL. R AGIL KUSUMADYA NO.32', '0', '0', 'JATI KULON', 'JATI', 'KUDUS', '425070', 1, 'MFian', '2024-05-01 01:10:04.897'),
+(505, 'MADIUN', 207, 'JL. MAYJEND SUNGKONO No. 31 MADIUN', '0', '0', 'NAMBANGAN KIDUL', 'MANGUHARJO', 'MADIUN', '473176', 1, 'PERWIRASQLSE', '2024-04-30 02:11:31.000'),
+(528, 'BANDAR JAYA', 202, 'Jl. PROKLAMATOR RAYA RUKO B7-B8 BLOK A1-A2 LINGKUNGAN III', '0', '0', 'BANDAR JAYA TIMUR', 'TERBANGGI BESAR', 'LAMPUNG TENGAH', '529691', 1, 'KevinSN', '2024-05-01 00:33:43.270'),
+(547, 'TANJUNG PINANG', 201, 'JL. DI PANJAITAN KM 9 , RUKO GRAND BINTAN NO. 19', '0', '0', 'AIR RAJA', 'TANJUNG PINANG', 'TANJUNG PINANG', '7335776', 1, 'MFian', '2024-05-01 01:10:34.077');
 
-INSERT INTO Products
+
+INSERT INTO LogPayment
+(
+    BranchID,
+    ApplicationID,
+    Reason,
+    RequestBy,
+    ActivePhoneNumber,
+    PrepaymentType,
+    EffectiveDate,
+    SeqNo,
+    UsrLog,
+    DtmLog
+)
 VALUES
-(1,'Laptop','Electronics',15000000),
-(2,'Mouse','Accessories',250000);
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'Customer', '085272533999', 'NM', '2024-04-23', 1, 'Emp1', '2024-04-23 14:01:34.623'),
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'Customer', '085272533999', 'NM', '2024-04-23', 1, 'Emp1', '2024-04-23 14:01:34.623'),
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'Customer', '085272533999', 'NM', '2024-04-30', 2, 'Emp1', '2024-04-30 14:01:26.183'),
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'Customer', '085272533999', 'NM', '2024-04-30', 2, 'Emp1', '2024-04-30 14:01:26.183'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'Customer', '0', 'NM', '2024-05-08', 1, 'Emp2', '2024-04-30 15:29:01.250'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'Customer', '0', 'NM', '2024-05-08', 1, 'Emp2', '2024-04-30 15:29:01.250'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'Customer', '0', 'NM', '2024-05-08', 1, 'Emp2', '2024-04-30 15:29:01.250'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'Customer', '0', 'NM', '2024-05-08', 2, 'Emp2', '2024-04-30 15:29:02.963'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'Customer', '0', 'NM', '2024-05-08', 2, 'Emp2', '2024-04-30 15:29:02.963'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'Customer', '0', 'NM', '2024-05-08', 2, 'Emp2', '2024-04-30 15:29:02.963'),
+(505, '505A202112000641', 'Internal', 'Internal', NULL, 'NM', '2024-04-30', 1, 'Emp3', '2024-04-30 11:55:31.803'),
+(505, '505A202112000641', 'Internal', 'Internal', NULL, 'NM', '2024-04-30', 1, 'Emp3', '2024-04-30 11:55:31.803'),
+(501, '501A201906000929', 'Cek Saldo', 'Internal', NULL, 'NM', '2023-11-30', 1, 'Emp3', '2023-11-16 08:08:02.133'),
+(501, '501A201906000929', 'Internal', 'Internal', NULL, 'NM', '2023-11-30', 2, 'Emp3', '2023-11-28 13:14:12.227'),
+(501, '501A201906000929', 'Internal', 'Internal', NULL, 'NM', '2023-11-30', 3, 'Emp3', '2023-11-29 08:45:23.667');
 
-INSERT INTO Orders
+
+INSERT INTO PaymentRequest
+(
+    BranchID,
+    ApplicationID,
+    Reason,
+    RequestBy,
+    PrepaymentType,
+    FollowUpDate,
+    SeqNo,
+    IsFollowUp,
+    Usrupd,
+    Dtmupd
+)
 VALUES
-(1,1,1,'2026-01-10',1),
-(2,2,2,'2026-01-11',3),
-(3,3,1,'2026-02-05',2);
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 1, 0, 'user1', '2025-11-19'),
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 2, 0, 'user1', '2025-11-19'),
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 1, 0, 'user1', '2025-11-19'),
+(547, '547A202005000275', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 2, 0, 'user1', '2025-11-19'),
 
-SELECT
-    YEAR(OrderDate) AS Year,
-    MONTH(OrderDate) AS Month,
-    SUM(P.Price * O.Quantity) AS TotalSales
-FROM Orders O
-JOIN Products P
-ON O.ProductID = P.ProductID
-GROUP BY YEAR(OrderDate), MONTH(OrderDate);
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 3, 0, 'user1', '2025-11-19'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 1, 0, 'user1', '2025-11-19'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 2, 0, 'user1', '2025-11-19'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 3, 0, 'user1', '2025-11-19'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 1, 0, 'user1', '2025-11-19'),
+(528, '528A202103000348', 'Pelunasan Dipercepat', 'user1', 'NM', '2024-04-30', 2, 0, 'user1', '2025-11-19'),
+
+(505, '505A202112000641', 'Internal', 'user1', 'NM', '2024-04-30', 1, 1, 'user1', '2025-11-19'),
+(505, '505A202112000641', 'Internal', 'user1', 'NM', '2024-04-30', 2, 1, 'user1', '2025-11-19'),
+
+(501, '501A201906000929', 'Internal', 'user2', 'NM', '2024-04-30', 2, 1, 'user2', '2025-11-18'),
+(501, '501A201906000929', 'Internal', 'user2', 'NM', '2024-04-30', 2, 1, 'user2', '2025-11-18'),
+(501, '501A201906000929', 'Internal', 'user2', 'NM', '2024-04-30', 2, 1, 'user2', '2025-11-18');
